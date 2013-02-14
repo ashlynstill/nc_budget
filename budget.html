@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Balancing the NC Budget</title>
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="css/app.css" rel="stylesheet" media="screen">
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+
+
+<script>
+var r0 = ["Income Taxes",0,100,33,40];
+var r1 = ['Sales Taxes',0,100,8,100];
+var tax_array = [r0,r1];
+var total_rev = 0;
+
+var b0 = ["Education",0,20,6],
+    b1 = ["Health",0,20,8],
+    b2 = ["Government services",0,20,5],
+    b3 = ["Transportation",0,20,3];
+var b_array = [b0,b1,b2,b3];
+var total_spent = 0;
+var total = 0;
+
+
+  $(document).ready(function() {
+    $('#cf').append('<h2><i>Revenue</i></h2>');
+
+    for (var j=0;j<tax_array.length;j++){
+      $('#cf').append('<div class="row-fluid" id="revRow'+j+'"></div>');
+      $('#revRow'+j).append('<div class="span2" id="sectionRev'+j+'"><h2>'+tax_array[j][0]+'</h2><h4>Base: $'+tax_array[j][4]+'</h4></div><div class="span8"><div class="slide" id="slideRev'+j+'"></div></div><div class="span2"><h2 class="funds" id="fundsRev'+j+'">'+tax_array[j][3]+'%</h2></div>');
+      total_rev += ((parseInt(tax_array[j][3])*.01)*tax_array[j][4]);
+      
+      $('#slideRev'+j).slider({
+        min:tax_array[j][1],
+        max:tax_array[j][2],
+        step:1,
+        value:tax_array[j][3], 
+        slide: function(event, ui) { 
+          var slideval = ui.value;
+          var current_whole = $(this).attr('id');
+          var currentid = current_whole.split('slideRev').pop();
+          var allslide = [];
+          $('#fundsRev'+currentid).empty().append(slideval+'%');
+          $('.funds').each(function(j){
+              var base = tax_array[j][4];
+              var temp = parseInt($('#fundsRev'+j).text());
+              var changedRev = (temp*0.01)*base;
+              allslide.push(changedRev);
+          });  
+            total_rev=0;
+            for (var i = 0; i < allslide.length; i++){
+                total_rev += +allslide[i];
+            }
+            $('#totalrev').empty().append('Total revenue: $'+(Math.ceil(total_rev))); 
+            total = Math.ceil(total_rev-total_spent);
+          if(total>0){
+            $('#total').empty().append('Balance: $'+total).removeClass('neg').addClass('pos');
+          } if(total<0){
+            $('#total').empty().append('Balance: $'+total).removeClass('pos').addClass('neg');
+          } else{
+            $('#total').empty().append('Balance: $'+total).removeClass('pos').removeClass('neg');
+          }
+        }
+      });
+    }
+
+    $('#cf').append('<hr/><h2><i>Expenditures</i></h2>');
+    for (var i=0;i<b_array.length;i++){
+      $('#cf').append('<div class="row-fluid" id="row'+i+'"></div>');
+      $('#row'+i).append('<div class="span2" id="section'+i+'"><h2>'+b_array[i][0]+'</h2></div><div class="span8"><div class="slide" id="slide'+i+'"></div></div><div class="span2"><h2 class="spent" id="spent'+i+'">$'+b_array[i][3]+'</h2></div>');
+      var parsedTotals = parseInt(b_array[i][3]);
+      total_spent += parsedTotals;
+      $('#totalspent').empty().append('Total spent: $'+total_spent); 
+      $('#slide'+i).slider({
+        min:b_array[i][1],
+        max:b_array[i][2],
+        step:1,
+        value:b_array[i][3], 
+        slide: function(event, ui) { 
+          var slideval = ui.value;
+          var current_whole = $(this).attr('id');
+          var currentid = current_whole.split('slide').pop();
+          var allslide = [];
+          $('#spent'+currentid).empty().append('$'+slideval);
+          $('.spent').each(function(j){
+              var temp = parseInt($('#spent'+j).text().split("$").pop());
+              allslide.push(temp);
+              
+          });  
+            total_spent = 0;
+            for (var i = 0; i < 4; i++){
+                total_spent += +allslide[i];
+            }
+        $('#totalspent').empty().append('Total spent: $'+total_spent); 
+          total = Math.ceil(total_rev-total_spent);
+          if(total>0){
+            $('#total').empty().append('Balance: $'+total).removeClass('neg').addClass('pos');
+          } if(total<0){
+            $('#total').empty().append('Balance: $'+total).removeClass('pos').addClass('neg');
+          } else{
+            $('#total').empty().append('Balance: $'+total).removeClass('pos').removeClass('neg');
+          }
+        }
+
+      })
+    }
+
+      $('#totalrev').empty().append('Total revenue: $'+Math.ceil(total_rev));
+      total = Math.ceil(total_rev-total_spent);
+          if(total>0){
+            $('#total').empty().append('Balance: $'+total).removeClass('neg').addClass('pos');
+          } if(total<0){
+            $('#total').empty().append('Balance: $'+total).removeClass('pos').addClass('neg');
+          } else{
+            $('#total').empty().append('Balance: $'+total).removeClass('pos').removeClass('neg');
+          }
+
+  });
+</script>
+
+
+  </head>
+<body>
+
+  <div class="container-fluid" id="cf">
+    <div class="row-fluid">
+      <div class="span8"><h1>Can you balance the North Carolina budget?</h1></div>
+      <div class="span2"><h4 id="totalrev"></h4><h4 id="totalspent"></h4></div>
+      <div class="span2"><h2 id="total"></h2></div>
+    </div>
+    <hr/>
+    
+  </div>
+
+
+
+
+
+
+    <script src="js/bootstrap.min.js"></script>
+  </body>
+</html>

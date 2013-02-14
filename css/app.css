@@ -1,0 +1,16 @@
+.slide{
+	margin-top:25px;
+}
+
+.row-fluid h2 {
+	font-weight:normal;
+}
+.pos{
+	color:green;
+}
+.neg{
+	color:red;
+}
+.zero{
+	color:#000;
+}
