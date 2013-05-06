@@ -1,16 +1,4 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Balancing the NC Budget</title>
-    <!-- Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link href="css/app.css" rel="stylesheet" media="screen">
-    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
-
-
-<script>
+//variables for budget objects
 var r0 = ["Income Taxes",0,100,33,50];
 var r1 = ['Sales Taxes',0,100,8,100];
 var tax_array = [r0,r1];
@@ -26,12 +14,14 @@ var total_spent = 0;
 var total = 0;
 
 
-  $(document).ready(function() {
-    $('#cf').append('<h2><i>Revenue</i></h2>');
+//revenue
+
+ $(document).ready(function() {
+    $('#cf').append('<div id="revRow"><div class="container-fluid"><h2><i>Revenue</i></h2><div class="row-fluid" id="rev"></div></div></div>');
 
     for (var j=0;j<tax_array.length;j++){
-      $('#cf').append('<div class="row-fluid" id="revRow'+j+'"></div>');
-      $('#revRow'+j).append('<div class="span2" id="sectionRev'+j+'"><h2>'+tax_array[j][0]+'</h2><h4>Base: $'+tax_array[j][4]+'</h4></div><div class="span8"><div class="slide" id="slideRev'+j+'"></div></div><div class="span2"><h2 class="funds" id="fundsRev'+j+'">'+tax_array[j][3]+'%</h2></div>');
+      $('#rev').append('<div class="span6" id="revRow'+j+'"></div>');
+      $('#revRow'+j).append('<div class="row-fluid" id="sectionRev'+j+'"><div class="span6"><h3>'+tax_array[j][0]+'</h3><h4>Base: $'+tax_array[j][4]+'</h4></div><div class="offset3 span3"><h2 class="funds" id="fundsRev'+j+'">'+tax_array[j][3]+'%</h2></div></div><div class="row-fluid"><div class="slide" id="slideRev'+j+'"></div></div>');
       total_rev += ((parseInt(tax_array[j][3])*.01)*tax_array[j][4]);
       
       $('#slideRev'+j).slider({
@@ -68,9 +58,11 @@ var total = 0;
       });
     }
 
-    $('#cf').append('<hr/><h2><i>Expenditures</i></h2>');
+
+//expenditures
+	$('#cf').append('<div id="expRow"><div class="container-fluid"><h2><i>Expenditures</i></h2><div class="row-fluid" id="exp"></div></div></div>');
     for (var i=0;i<b_array.length;i++){
-      $('#cf').append('<div class="row-fluid" id="row'+i+'"></div>');
+      $('#exp').append('<div class="row-fluid" id="row'+i+'"></div>');
       $('#row'+i).append('<div class="span2" id="section'+i+'"><h2>'+b_array[i][0]+'</h2></div><div class="span8"><div class="slide" id="slide'+i+'"></div></div><div class="span2"><h2 class="spent" id="spent'+i+'">$'+b_array[i][3]+'</h2></div>');
       var parsedTotals = parseInt(b_array[i][3]);
       total_spent += parsedTotals;
@@ -108,7 +100,7 @@ var total = 0;
 
       })
     }
-
+//calculate blaance
       $('#totalrev').empty().append('Total revenue: $'+Math.ceil(total_rev));
       total = Math.ceil(total_rev-total_spent);
           if(total>0){
@@ -120,27 +112,3 @@ var total = 0;
           }
 
   });
-</script>
-
-
-  </head>
-<body>
-
-  <div class="container-fluid" id="cf">
-    <div class="row-fluid">
-      <div class="span8"><h1>Can you balance the North Carolina budget?</h1></div>
-      <div class="span2"><h4 id="totalrev"></h4><h4 id="totalspent"></h4></div>
-      <div class="span2"><h2 id="total"></h2></div>
-    </div>
-    <hr/>
-    
-  </div>
-
-
-
-
-
-
-    <script src="js/bootstrap.min.js"></script>
-  </body>
-</html>

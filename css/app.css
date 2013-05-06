@@ -1,9 +1,42 @@
 .slide{
-	margin-top:25px;
+	margin:5px 0px 20px 0px;
 }
 
-.row-fluid h2 {
-	font-weight:normal;
+#formula h4{
+	float:left;
+}
+
+#rev{
+	background-color:#eee;
+	width:100%;
+	padding:20px;
+	margin:20px -20px;
+}
+#revRow0{
+	border-right:1px solid #ccc;
+	padding-right:18px;
+	margin-right:-10px;
+}
+
+#rev h3 {
+	line-height:1em;
+	margin-bottom:2px;
+	font-size:26px;
+}
+#rev h4 {
+	margin-top:0px;
+	padding-top:0px;
+	line-height:1em;
+}
+.funds h2{
+	font-size:30px;
+}
+.funds {
+	border-radius:10px;
+	background-color:#f7f7f7;
+	padding:10px 5px;
+	width:auto;
+	text-align:center;
 }
 .pos{
 	color:green;
