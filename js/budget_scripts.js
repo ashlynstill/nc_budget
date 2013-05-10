@@ -18,7 +18,6 @@ var total = 0;
 
  $(document).ready(function() {
     $('#cf').append('<div id="revRow"><div class="container-fluid"><h2><i>Revenue</i></h2><div class="row-fluid" id="rev"></div></div></div>');
-
     for (var j=0;j<tax_array.length;j++){
       $('#rev').append('<div class="span6" id="revRow'+j+'"></div>');
       $('#revRow'+j).append('<div class="row-fluid" id="sectionRev'+j+'"><div class="span6"><h3>'+tax_array[j][0]+'</h3><h4>Base: $'+tax_array[j][4]+'</h4></div><div class="offset3 span3"><h2 class="funds" id="fundsRev'+j+'">'+tax_array[j][3]+'%</h2></div></div><div class="row-fluid"><div class="slide" id="slideRev'+j+'"></div></div>');
@@ -45,14 +44,14 @@ var total = 0;
             for (var i = 0; i < allslide.length; i++){
                 total_rev += +allslide[i];
             }
-            $('#totalrev').empty().append('Total revenue: $'+(Math.ceil(total_rev))); 
+            $('#totalrev').empty().append('Total revenue: $'+(Math.ceil(total_rev))+' + '); 
             total = Math.ceil(total_rev-total_spent);
           if(total>0){
-            $('#total').empty().append('Balance: $'+total).removeClass('neg').addClass('pos');
+            $('#total').empty().append(' = Balance: $'+total).removeClass('neg').addClass('pos');
           } if(total<0){
-            $('#total').empty().append('Balance: $'+total).removeClass('pos').addClass('neg');
+            $('#total').empty().append(' = Balance: $'+total).removeClass('pos').addClass('neg');
           } else{
-            $('#total').empty().append('Balance: $'+total).removeClass('pos').removeClass('neg');
+            $('#total').empty().append(' = Balance: $'+total).removeClass('pos').removeClass('neg');
           }
         }
       });
@@ -62,11 +61,11 @@ var total = 0;
 //expenditures
 	$('#cf').append('<div id="expRow"><div class="container-fluid"><h2><i>Expenditures</i></h2><div class="row-fluid" id="exp"></div></div></div>');
     for (var i=0;i<b_array.length;i++){
-      $('#exp').append('<div class="row-fluid" id="row'+i+'"></div>');
-      $('#row'+i).append('<div class="span2" id="section'+i+'"><h2>'+b_array[i][0]+'</h2></div><div class="span8"><div class="slide" id="slide'+i+'"></div></div><div class="span2"><h2 class="spent" id="spent'+i+'">$'+b_array[i][3]+'</h2></div>');
+      $('#exp').append('<div class="row-fluid expRow" id="row'+i+'"></div>');
+      $('#row'+i).append('<div class="row-fluid" id="section'+i+'"><div class="span6"><h3>'+b_array[i][0]+'</h3></div><div class="offset4 span2"><h2 class="spent" id="spent'+i+'">$'+b_array[i][3]+'</h2></div></div><div class="row-fluid"><div class="slide" id="slide'+i+'"></div></div>');
       var parsedTotals = parseInt(b_array[i][3]);
       total_spent += parsedTotals;
-      $('#totalspent').empty().append('Total spent: $'+total_spent); 
+      $('#totalspent').empty().append('Total spent: $'+total_spent+' '); 
       $('#slide'+i).slider({
         min:b_array[i][1],
         max:b_array[i][2],
@@ -87,28 +86,47 @@ var total = 0;
             for (var i = 0; i < 4; i++){
                 total_spent += +allslide[i];
             }
-        $('#totalspent').empty().append('Total spent: $'+total_spent); 
+        $('#totalspent').empty().append(' Total spent: $'+total_spent+' '); 
           total = Math.ceil(total_rev-total_spent);
           if(total>0){
-            $('#total').empty().append('Balance: $'+total).removeClass('neg').addClass('pos');
+            $('#total').empty().append(' = Balance: $'+total).removeClass('neg').addClass('pos');
           } if(total<0){
-            $('#total').empty().append('Balance: $'+total).removeClass('pos').addClass('neg');
+            $('#total').empty().append(' = Balance: $'+total).removeClass('pos').addClass('neg');
           } else{
-            $('#total').empty().append('Balance: $'+total).removeClass('pos').removeClass('neg');
+            $('#total').empty().append(' = Balance: $'+total).removeClass('pos').removeClass('neg');
           }
         }
 
       })
     }
 //calculate blaance
-      $('#totalrev').empty().append('Total revenue: $'+Math.ceil(total_rev));
+      $('#totalrev').empty().append(' Total revenue: $'+Math.ceil(total_rev)+' + ');
       total = Math.ceil(total_rev-total_spent);
           if(total>0){
-            $('#total').empty().append('Balance: $'+total).removeClass('neg').addClass('pos');
+            $('#total').empty().append(' = Balance: $'+total).removeClass('neg').addClass('pos');
           } if(total<0){
-            $('#total').empty().append('Balance: $'+total).removeClass('pos').addClass('neg');
+            $('#total').empty().append(' = Balance: $'+total).removeClass('pos').addClass('neg');
           } else{
-            $('#total').empty().append('Balance: $'+total).removeClass('pos').removeClass('neg');
+            $('#total').empty().append(' = Balance: $'+total).removeClass('pos').removeClass('neg');
           }
 
+//scrollTo for formula bar
+
+	$(window).scroll(function(){
+		var form = $('#formula');
+		var formPos = form.offset();
+		var windowPos = $(window).scrollTop()
+		if (windowPos >= formPos.top ){
+			form.addClass('fixed');
+			form.removeClass('rel_pos');
+		} if (windowPos < formPos.top ){
+			form.removeClass('fixed');
+			form.addClass('rel_pos');
+		}
+	})
+
+
   });
+
+
+

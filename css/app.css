@@ -4,13 +4,40 @@
 
 #formula h4{
 	float:left;
+	margin-left:5px;
 }
+.fixed{
+	position:fixed;
+	right:0;
+	top:0;
+	padding:10px 40px 10px 10px;
+	z-index:1000;
+	border-radius:0px 0px 0px 10px;
+}
+.rel_pos{
+	padding:10px 20px 10px 10px;
+	border-radius:10px;
+}
+#formula{
+	float:right;
+	border:1px solid #ddd;
+	background-color:#f7f7f7;
+	color:#474747;
+	
+}
+
+
 
 #rev{
 	background-color:#eee;
 	width:100%;
 	padding:20px;
 	margin:20px -20px;
+}
+.expRow:nth-child(odd){
+	background-color:#eee;
+	margin:20px -20px;
+	padding:20px;
 }
 #revRow0{
 	border-right:1px solid #ccc;
@@ -28,16 +55,18 @@
 	padding-top:0px;
 	line-height:1em;
 }
-.funds h2{
+.funds h2, .spent h2{
 	font-size:30px;
 }
-.funds {
+.funds, .spent {
 	border-radius:10px;
 	background-color:#f7f7f7;
 	padding:10px 5px;
 	width:auto;
 	text-align:center;
+	border:1px solid #ddd;
 }
+
 .pos{
 	color:green;
 }
