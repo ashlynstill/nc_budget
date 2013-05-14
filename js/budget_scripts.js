@@ -47,11 +47,11 @@ var total = 0;
             $('#totalrev').empty().append('Total revenue: $'+(Math.ceil(total_rev))+' + '); 
             total = Math.ceil(total_rev-total_spent);
           if(total>0){
-            $('#total').empty().append(' = Balance: $'+total).removeClass('neg').addClass('pos');
+            $('#total').empty().append(' Balance: $'+total).removeClass('neg').addClass('pos');
           } if(total<0){
-            $('#total').empty().append(' = Balance: $'+total).removeClass('pos').addClass('neg');
+            $('#total').empty().append(' Balance: $'+total).removeClass('pos').addClass('neg');
           } else{
-            $('#total').empty().append(' = Balance: $'+total).removeClass('pos').removeClass('neg');
+            $('#total').empty().append(' Balance: $'+total).removeClass('pos').removeClass('neg');
           }
         }
       });
@@ -86,14 +86,14 @@ var total = 0;
             for (var i = 0; i < 4; i++){
                 total_spent += +allslide[i];
             }
-        $('#totalspent').empty().append(' Total spent: $'+total_spent+' '); 
+        $('#totalspent').empty().append(' Total spent: $'+total_spent+' = '); 
           total = Math.ceil(total_rev-total_spent);
           if(total>0){
-            $('#total').empty().append(' = Balance: $'+total).removeClass('neg').addClass('pos');
+            $('#total').empty().append(' Balance: $'+total).removeClass('neg').addClass('pos');
           } if(total<0){
-            $('#total').empty().append(' = Balance: $'+total).removeClass('pos').addClass('neg');
+            $('#total').empty().append(' Balance: $'+total).removeClass('pos').addClass('neg');
           } else{
-            $('#total').empty().append(' = Balance: $'+total).removeClass('pos').removeClass('neg');
+            $('#total').empty().append(' Balance: $'+total).removeClass('pos').removeClass('neg');
           }
         }
 
@@ -103,12 +103,23 @@ var total = 0;
       $('#totalrev').empty().append(' Total revenue: $'+Math.ceil(total_rev)+' + ');
       total = Math.ceil(total_rev-total_spent);
           if(total>0){
-            $('#total').empty().append(' = Balance: $'+total).removeClass('neg').addClass('pos');
+            $('#total').empty().append(' Balance: $'+total).removeClass('neg').addClass('pos');
           } if(total<0){
-            $('#total').empty().append(' = Balance: $'+total).removeClass('pos').addClass('neg');
+            $('#total').empty().append(' Balance: $'+total).removeClass('pos').addClass('neg');
           } else{
-            $('#total').empty().append(' = Balance: $'+total).removeClass('pos').removeClass('neg');
+            $('#total').empty().append(' Balance: $'+total).removeClass('pos').removeClass('neg');
           }
+
+      	$('#totalspent').empty().append(' Total spent: $'+total_spent+' = '); 
+          total = Math.ceil(total_rev-total_spent);
+          if(total>0){
+            $('#total').empty().append(' Balance: $'+total).removeClass('neg').addClass('pos');
+          } if(total<0){
+            $('#total').empty().append(' Balance: $'+total).removeClass('pos').addClass('neg');
+          } else{
+            $('#total').empty().append(' Balance: $'+total).removeClass('pos').removeClass('neg');
+          }
+        
 
 //scrollTo for formula bar
 
