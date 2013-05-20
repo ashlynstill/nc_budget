@@ -22,6 +22,7 @@ var total = 0;
       $('#rev').append('<div class="span6" id="revRow'+j+'"></div>');
       $('#revRow'+j).append('<div class="row-fluid" id="sectionRev'+j+'"><div class="span6"><h3>'+tax_array[j][0]+'</h3><h4>Base: $'+tax_array[j][4]+'</h4></div><div class="offset3 span3"><h2 class="funds" id="fundsRev'+j+'">'+tax_array[j][3]+'%</h2></div></div><div class="row-fluid"><div class="slide" id="slideRev'+j+'"></div></div>');
       total_rev += ((parseInt(tax_array[j][3])*.01)*tax_array[j][4]);
+
       
       $('#slideRev'+j).slider({
         min:tax_array[j][1],
