@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="src/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="src/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
+    <link href="src/app.css" rel="stylesheet" media="screen">
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body>
+
+  	<div id="content">
+
+  		<div id="expRow">
+  			<div class="container-fluid">
+  				<h2><i>Expenditures</i></h2>
+  				<div class="row-fluid" id="exp">
+
+  				</div>
+  			</div>
+  		</div>
+
+	</div>
+
+	<script id="slide-template" type="text/x-handlebars-template">
+	    
+	    <div class="row-fluid expRow">
+		    <div class="row-fluid">
+		      	<div class="span6">
+		      		<h3>{{category}}</h3>
+		      		<p>{{description}}</p>
+		  		</div>
+		  		<div class="offset4 span2">
+		  			<h2 class="spent" id="spent{{index}}"></h2>
+		  		</div>
+		  	</div>
+	  		<div class="row-fluid">
+	  			<div class="slide" id="slide{{index}}">
+	  			</div>
+	  		</div>
+		  	</div>
+		 </div>
+		
+
+    </script>
+
+
+
+  	<script type="text/javascript" src="src/jquery.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="src/tabletop.js"></script>
+    <script type="text/javascript" src="src/handlebars.js"></script>
+
+    <script type="text/javascript">
+    
+    var public_spreadsheet_url = 'https://docs.google.com/spreadsheet/pub?key=0AhFVmr8LEO9SdG1RZnhDRmI2bDRNUkRFTjhubHBuSXc&output=html';
+
+    $(document).ready( function() {
+        Tabletop.init( { key: public_spreadsheet_url,
+                         callback: showInfo,
+                         parseNumbers: true,
+                         simpleSheet: true } )
+      	});
+        
+      	function showInfo(data, tabletop) {
+      		//compiling handlebars templates
+      		var source   = $("#slide-template").html();
+       		var template = Handlebars.compile(source);
+
+			$.each( tabletop.sheets("budget").all(), function(i, data) {
+				var html = template(data);
+          		$("#exp").append(html);
+          		var maxval;
+          		var startval = data.current/5;
+          		if (data.minus3amount==''){
+          			maxval = 4;
+          			startval = 2;
+          		} else {
+          			maxval = 6;
+          			startval = 3;
+          		}
+          		  $('#slide'+i).slider({
+	          		min:0,
+			        max:maxval,
+			        step:1,
+			        value:startval, 
+			        slide: function(event, ui) { 
+			          var slideval = (ui.value)*startval;
+			          var current_whole = $(this).attr('id');
+			          var currentid = current_whole.split('slide').pop();
+			          var allslide = [];
+			          $('#spent'+currentid).empty().append('$'+slideval);
+			          $('.spent').each(function(j){
+			              var temp = parseInt($('#spent'+j).text().split("$").pop());
+			              allslide.push(temp);
+			          });  
+			            total_spent = 0;
+			            for (var i = 0; i < 4; i++){
+			                total_spent += +allslide[i];
+			            }
+			        /*$('#totalspent').empty().append(' Total spent: $'+total_spent+' = '); 
+			          total = Math.ceil(total_rev-total_spent);
+			          if(total>0){
+			            $('#total').empty().append(' Balance: $'+total).removeClass('neg').addClass('pos');
+			          } if(total<0){
+			            $('#total').empty().append(' Balance: $'+total).removeClass('pos').addClass('neg');
+			          } else{
+			            $('#total').empty().append(' Balance: $'+total).removeClass('pos').removeClass('neg');
+			          }*/
+			        }
+			      });
+
+
+	        });
+       		
+
+
+
+        	/*$("#content").text("We found the tables " + tabletop.model_names.join(", "));
+
+        	$.each( tabletop.sheets(), function(i, sheet) {
+	          $("#content").append("<p>" + sheet.name + " has " + sheet.column_names.join(", ") + "</p>");
+	          console.log(sheet.toArray());
+	        });
+
+	        $.each( tabletop.sheets("budget").all(), function(i, data) {
+
+	          var bud_cat = $('<li><h4>' + data.category + '</h4><ul id="list'+i+'"></li>');
+	          bud_cat.appendTo("#content");
+	          if (data.minus3amount != ''){
+	         	 $('#list'+i).append('<li>'+data.minus3amount+'</li><ul><li>'+data.minus3list+'</li></ul>');
+	          }
+	          $('#list'+i).append('<li>'+data.minus2amount+'</li><ul><li>'+data.minus2list+'</li></ul>'); 
+	          $('#list'+i).append('<li>'+data.minus1amount+'</li><ul><li>'+data.minus1list+'</li></ul>'); 
+	          $('#list'+i).append('<li><b>'+data.current+'</b></li>'); 
+	          $('#list'+i).append('<li>'+data.plus1amount+'</li><ul><li>'+data.plus1list+'</li></ul>'); 
+	          $('#list'+i).append('<li>'+data.plus2amount+'</li><ul><li>'+data.plus2list+'</li></ul>'); 
+	          if (data.plus3amount != ''){
+	          	$('#list'+i).append('<li>'+data.plus3amount+'</li><ul><li>'+data.plus3list+'</li></ul>');  
+	          }
+	        });*/
+    	}
+
+	</script>
+
+  </body>
+ </html>
